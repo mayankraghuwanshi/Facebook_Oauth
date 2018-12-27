@@ -23,6 +23,7 @@ server.set('view engine' , 'hbs')
 server.use(express.json())
 server.use(express.urlencoded({extended:true}))
 server.use(session({ secret: "cats" }));
+server.use(express.static(path.join(__dirname , 'public')))
 server.use(passport.initialize());
 server.use(passport.session());
 server.use(flash())
@@ -45,11 +46,12 @@ function Logcheck(req , res ,next) {
 server.get('/home' , Logcheck , (req , res)=>{
     res.render('home')
 })
-
+server.use('/post' , require('./routes/post'))
 server.use('/' , require('./routes/auth'))
+server.use('/' , require('./routes/main'))
 
 server.get('/' , (req , res)=>{
-    res.send("working")
+    res.render('index')
 })
 server.listen(3000 , ()=>{
     console.log("http://localhost:3000/auth/facebook\nhttp://localhost:3000")

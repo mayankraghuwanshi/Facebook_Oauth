@@ -1,0 +1,36 @@
+{{#if user}}
+    {{# if posts}}
+        {{# each post}}
+            {{#if this.user._id isuser._id}}
+                <h1>yeah</h1>
+            {{/if}}
+        {{/each}}
+    {{/if}}
+{{/if}}
+
+
+<div class="col-md-8">
+    <div style="height: 30px;"></div>
+    {{# if posts}}
+        {{# each posts}}
+            <div class="card mb-4">
+                {{# if this.image}}
+                    <img class="card-img-top" src="{{this.image}}" alt="Card image cap">
+                {{/if}}
+                <div class="card-body">
+                    <h2 class="card-title">{{this.title}}</h2>
+                    <p class="card-text">{{this.content}}</p>
+                    <a href="/post/find{{this._id}}" class="btn btn-primary">Read More &rarr;</a>
+                </div>
+                <div class="card-footer text-muted">
+                    Posted {{this.date}}, 2017 by
+                    <a href="/user/find{{this.user._id}}">{{this.user.firstname}}</a>
+                    {{# if this.flag}}
+                        <a href="/post/delete{{this._id}}">
+                            <img src="http://purepng.com/public/uploads/large/purepng.com-trash-full-iconsymbolsiconsapple-iosiosios-8-iconsios-8-721522596131n9asu.png"
+                                 style="width: 30px; float: right"></a>{{/if}}
+                </div>
+            </div>
+        {{/each}}
+    {{/if}}
+</div>

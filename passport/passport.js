@@ -17,7 +17,7 @@ passport.use(new FacebookStrategy({
         clientID: process.env.CLIENT_ID,
         clientSecret: process.env.CLIENT_SECRET,
         callbackURL: "http://localhost:3000/auth/facebook/callback",
-        profileFields: ['id','displayName' ,'name','gender', 'emails']
+        profileFields: ['id','displayName' ,'name','gender','photos', 'hometown', 'profileUrl', 'emails']
     },
     function(accessToken, refreshToken, profile, done) {
         User.findOne({facebook_id : profile._json.id} , function (err , user) {

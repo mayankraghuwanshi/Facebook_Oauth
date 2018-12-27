@@ -12,7 +12,9 @@ router.post('/putp' , (req , res)=>{
     const data = new Post({
         title : req.body.title,
         content : req.body.content,
-       user: req.user._id
+       user: req.user._id,
+        photo : req.body.photo,
+        category : req.body.category
     })
     data.save().then((data)=>{
         req.flash('success' , "Youre post is added.")

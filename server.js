@@ -53,6 +53,6 @@ server.use('/' , require('./routes/main'))
 server.get('/' , (req , res)=>{
     res.render('index')
 })
-server.listen(3000 , ()=>{
+server.listen(3000 || process.env.PORT , ()=>{
     console.log("http://localhost:3000/auth/facebook\nhttp://localhost:3000")
 })

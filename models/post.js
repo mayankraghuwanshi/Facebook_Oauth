@@ -33,6 +33,13 @@ const postSchema = mongoose.Schema({
             default : false
         }
     }]
+    ,
+    photo :{
+        type: String,
+    },
+    category :{
+        type: String,
+    }
 })
 
 const post = module.exports = mongoose.model('post' , postSchema)

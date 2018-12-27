@@ -3,12 +3,12 @@
     {{# if posts}}
         {{# each posts}}
             <div class="card mb-4 mt-4">
-                {{# if this.image}}
-                <img class="card-img-top" src="{{this.image}}" alt="Card image cap">
+                {{# if this.photo}}
+                <img class="card-img-top" src="{{this.photo}}" alt="Card image cap">
                 {{/if}}
                 <div class="card-body">
                     <h2 class="card-title">{{this.title}}</h2>
-                    <p class="card-text">{{this.content}}</p>
+                    <!--<p class="card-text">{{this.content}}</p>-->
                     <a href="/post/find{{this._id}}" class="btn btn-primary">Read More &rarr;</a>
                 </div>
                 <div class="card-footer text-muted">

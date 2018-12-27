@@ -1,0 +1,13 @@
+{{# if error}}
+    <h1>{{error}}</h1>
+{{/if}}
+{{# if success}}
+<h1>{{success}}</h1>
+{{/if}}
+
+{{# if user}}
+    <h1>{{user.firstname}}</h1>
+    <a href="/auth/logout"><button>LOG OUT</button></a>
+    {{else}}
+        <a href="/auth/facebook"><button>FACEBOOK LOGIN</button></a>
+{{/if}}

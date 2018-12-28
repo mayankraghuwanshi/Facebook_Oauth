@@ -1,6 +1,7 @@
 body {
   padding-top: 54px;
   font-family: 'Open Sans', sans-serif;
+  transition: all 1s;
 }
 
 @media (min-width: 992px) {

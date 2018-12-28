@@ -21,7 +21,7 @@ router.post('/putp' , (req , res)=>{
         res.redirect(`/post/find${data._id}`)
     }).catch((err)=>{
         req.flash('error' , err)
-        res.redirect('/index')
+        res.redirect('/')
     })
 })
 
@@ -50,5 +50,76 @@ router.post('/add_c:id' , async (req , res)=>{
     })
 
 }})
+
+router.get('/delete:id' , (req , res)=>{
+    Post.findOne({_id : req.params.id}).then((data)=>{
+        if(data.user._id.equals(req.user._id)){
+            Post.remove({_id : req.params.id}).then((data)=>{
+                req.flash('success' , "Post Deleted.")
+                res.redirect('/')
+            }).catch((err)=>{
+                req.flash('error' , 'Error while deleting post!')
+            })}
+        else{
+            req.flash('error' , "You can't delete this post")
+            res.redirect(`/post/find${req.params.id}`)}
+    }).catch((err)=>{
+                req.flash('error' , 'Error while fetching post')
+                  res.redirect(`/post/find${req.params.id}`)
+    })
+})
+
+router.get('/like:id' , async (req , res)=>{
+   let post = await Post.findOne({_id : req.params.id});
+   if(!post) {
+       req.flash('error', "not able to fetch post ")
+       res.redirect(`/post/find${req.params.id}`)
+   }else{
+       let flag = false;
+      for(let i=0 ; i<post.likes.length;i++){
+            if(req.user._id.equals(post.likes[i].liker_id)){
+                flag = true;
+            }}
+      if(flag){
+          //dislike
+          post.likes.pop({liker_id : req.user._id , liker_name : req.user.firstname})
+          post.likes_count = post.likes_count-1;
+          post.save().then((data)=>{
+              req.flash('success' , "Disliked.")
+              res.redirect('/')
+          }).catch((err)=>{
+              req.flash('error' , 'something went wrong while Disliking!')
+              res.redirect('/')
+          })
+      }
+      else{
+          //like
+          post.likes.push({liker_id : req.user._id , liker_name : req.user.firstname})
+          post.likes_count = post.likes_count+1;
+          post.save().then((data)=>{
+              req.flash('success' , "Liked.")
+              res.redirect('/')
+          }).catch((err)=>{
+                  req.flash('error' , 'something went wrong while liking!')
+                  res.redirect('/')
+          })
+      }
+
+
+   }
+
+
+})
+
+router.get('/getpost' , (req , res)=>{
+    Post.find({}).populate('user').then((data)=>{
+        res.send(data)
+    }).catch((err)=>{
+        res.send((err))
+    })
+})
+
+
+
 
 module.exports = router

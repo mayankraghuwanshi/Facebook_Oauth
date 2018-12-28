@@ -1,4 +1,5 @@
 {{# if user}}
+    <script src="https://cdn.ckeditor.com/4.11.0/standard/ckeditor.js"></script>
     <div class="card my-4">
         <h5 class="card-header" align="center">{{user.firstname}} how's you feeling today</h5>
         <div class="card-body">
@@ -19,4 +20,8 @@
             </form>
         </div>
     </div>
+    <script>
+        CKEDITOR.replace( 'content' );
+
+    </script>
 {{/if}}

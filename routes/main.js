@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const axios = require('axios')
 const exphbs = require('express-handlebars')
-router.get('/index' ,async (req , res)=>{
+router.get('/' ,async (req , res)=>{
   const data = await axios.get('http://localhost:3000/post/getp')
   let posts = data.data
   if(posts <= 0 ){

@@ -8,16 +8,24 @@
                 {{/if}}
                 <div class="card-body">
                     <h2 class="card-title">{{this.title}}</h2>
-                    <!--<p class="card-text">{{this.content}}</p>-->
+                    <!--<p class="card-text">{{{this.content}}}</p>-->
                     <a href="/post/find{{this._id}}" class="btn btn-primary">Read More &rarr;</a>
                 </div>
                 <div class="card-footer text-muted">
                     Posted {{this.date}}, 2017 by
                     <a href="/user/find{{this.user._id}}">{{this.user.firstname}}</a>
                     {{# if this.flag}}
-                        <a href="/post/delete{{this._id}}">
-                        <img src="http://purepng.com/public/uploads/large/purepng.com-trash-full-iconsymbolsiconsapple-iosiosios-8-iconsios-8-721522596131n9asu.png"
-                             style="width: 30px; float: right"></a>{{/if}}
+                        <div style="
+                        width: 100px; float: right; margin: 5px; padding: 5px; border-radius: 5px;
+                        background-color: #d9dfe5;
+                                                                      ">
+                        <a href="/post/like{{this._id}}">
+                            <img src="https://static.thenounproject.com/png/901800-200.png"
+                                 style="width: 20px; margin: 2px 5px 0 0; float: left"></a>
+                            {{this.likes_count}}
+                              <a href="/post/delete{{this._id}}">
+                        <img src="https://img.icons8.com/metro/1600/delete.png"
+                             style="width: 20px; float: right"></a></div>{{/if}}
                 </div>
             </div>
         {{/each}}

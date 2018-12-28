@@ -16,13 +16,19 @@ const postSchema = mongoose.Schema({
     flag:{
         type: Boolean,
         default: false
-    }
-    ,
+    },
     date : {
         type:Date,
         default : Date.now()
-    }
-    ,
+    },
+    likes :[{ liker_id : {type:String, required : true },
+              liker_name : {type:String, required :true }}],
+    likes_count : {
+        type :Number , default : 0
+    },
+    comments_count :{
+        type : Number, default : 0
+    },
     comments :[{
             comment : {type : String  , required : true},
             commenter : {type :String  , required : true},
@@ -32,8 +38,7 @@ const postSchema = mongoose.Schema({
             type : Boolean,
             default : false
         }
-    }]
-    ,
+    }],
     photo :{
         type: String,
     },

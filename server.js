@@ -52,6 +52,6 @@ server.use('/' , require('./routes/main'))
 server.get('/privacy' , (req , res)=>{
     res.render('privacy')
 })
-server.listen(3000 || process.env.PORT , ()=>{
+server.listen(process.env.PORT || 3000, ()=>{
     console.log("http://localhost:3000/auth/facebook\nhttp://localhost:3000")
 })

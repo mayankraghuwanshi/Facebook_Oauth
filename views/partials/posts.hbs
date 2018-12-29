@@ -1,20 +1,19 @@
 <div class="col-md-8">
-    {{>ck}}
     {{# if posts}}
         {{# each posts}}
             <div class="card mb-4 mt-4">
                 {{# if this.photo}}
                 <img class="card-img-top" src="{{this.photo}}" alt="Card image cap">
                 {{/if}}
-                <div class="card-body">
+                <div class="card-body" style="overflow: scroll">
                     <h2 class="card-title">{{this.title}}</h2>
-                    <!--<p class="card-text">{{{this.content}}}</p>-->
+                    {{{this.content}}}
                     <a href="/post/find{{this._id}}" class="btn btn-primary">Read More &rarr;</a>
                 </div>
                 <div class="card-footer text-muted">
                     {{this.date}} ago by
                     <a href="/user/find{{this.user._id}}">{{this.user.firstname}}</a>
-   <div style="padding: 5px; background-color: #c7cfd6; width: 150px; height: 30px; border-radius: 12px; float: right">
+   <div style="padding: 5px; width: 150px; height: 30px; border-radius: 12px; float: right">
                         Upvotes {{this.meta.likes_count}}
                     {{# if this.meta.like_flag}}
                         <a href="/post/like{{this._id}}">
@@ -27,7 +26,7 @@
                     {{# if this.meta.delete_flag}}
                               <a id="delete" href="/post/delete{{this._id}}">
                         <img id="delete" src="https://img.icons8.com/metro/1600/delete.png"
-                             style="width: 20px; float: right"></a>{{/if}}</div>
+                             style="width: 20px; margin-right: 10px; float: right"></a>{{/if}}</div>
                 </div>
             </div>
         {{/each}}

@@ -1,6 +1,14 @@
 const router  = require('express').Router()
 const Post    = require('../models/post')
 
+function Logcheck(req , res ,next) {
+    if(!req.isAuthenticated()){
+        req.flash('error' , 'please login first')
+        res.redirect('/')}
+    else{
+        next()}}
+
+
 router.get('/getp' , (req , res)=>{
     Post.find({}).populate('user').then((data)=>{
         res.send(data)
@@ -8,7 +16,10 @@ router.get('/getp' , (req , res)=>{
         res.send((err))
     })
 })
-router.post('/putp' , (req , res)=>{
+router.get('/add', Logcheck, (req , res)=>{
+    res.render('addpost')
+})
+router.post('/add' ,Logcheck, (req , res)=>{
     const data = new Post({
         title : req.body.title,
         content : req.body.content,
@@ -20,7 +31,7 @@ router.post('/putp' , (req , res)=>{
         req.flash('success' , "Youre post is added.")
         res.redirect(`/post/find${data._id}`)
     }).catch((err)=>{
-        req.flash('error' , err)
+        req.flash('error' , 'Something went wrong while adding post :(')
         res.redirect('/')
     })
 })
@@ -33,7 +44,7 @@ router.get('/find:id' , (req , res)=>{
     })
 
 })
-router.post('/add_c:id' , async (req , res)=>{
+router.post('/add_c:id' ,Logcheck, async (req , res)=>{
     if(req.body.comment === null){
         req.flash('error' , "Please enter a valid comment!")
         res.redirect(`/post/find${req.params.id}`)
@@ -52,7 +63,7 @@ router.post('/add_c:id' , async (req , res)=>{
 
 }})
 
-router.get('/delete:id' , (req , res)=>{
+router.get('/delete:id' ,Logcheck, (req , res)=>{
     Post.findOne({_id : req.params.id}).then((data)=>{
         if(data.user._id.equals(req.user._id)){
             Post.remove({_id : req.params.id}).then((data)=>{
@@ -70,7 +81,7 @@ router.get('/delete:id' , (req , res)=>{
     })
 })
 
-router.get('/like:id' , async (req , res)=>{
+router.get('/like:id' , Logcheck ,async (req , res)=>{
    let post = await Post.findOne({_id : req.params.id});
    if(!post) {
        req.flash('error', "Not able to fetch post ")
@@ -86,7 +97,7 @@ router.get('/like:id' , async (req , res)=>{
           post.likes.pop({liker_id : req.user._id , liker_name : req.user.firstname})
           post.meta.likes_count = post.meta.likes_count-1;
           post.save().then((data)=>{
-              req.flash('success' , "Disliked.")
+              req.flash('success' , "Downvoted.")
               res.redirect('/')
           }).catch((err)=>{
               req.flash('error' , 'something went wrong while Disliking!')
@@ -97,7 +108,7 @@ router.get('/like:id' , async (req , res)=>{
           post.likes.push({liker_id : req.user._id , liker_name : req.user.firstname})
           post.meta.likes_count = post.meta.likes_count+1;
           post.save().then((data)=>{
-              req.flash('success' , "Liked.")
+              req.flash('success' , "Upvoted.")
               res.redirect('/')
           }).catch((err)=>{
                   req.flash('error' , 'something went wrong while liking!')

@@ -7,7 +7,7 @@ const date_compare = require('../utils/date_compare')
 //Desc To serve posts at home page
 //Public
 
-router.get('/' ,async (req , res)=>{
+router.get('/x' ,async (req , res)=>{
   const data = await axios.get('http://localhost:3000/post/getp')
   let posts = data.data
     if(posts.length <= 0 ){
@@ -25,7 +25,7 @@ router.get('/' ,async (req , res)=>{
     posts[i].date = date_compare(posts[i].date)}}
 res.render('home' , {posts , title:"Home" })
 })
-router.get('/check' ,(req , res)=>{
+router.get('/' ,(req , res)=>{
 
   res.render('addpost' )
 })

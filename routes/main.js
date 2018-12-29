@@ -10,7 +10,7 @@ const date_compare = require('../utils/date_compare')
 router.get('/' ,async (req , res)=>{
   const data = await axios.get('http://localhost:3000/post/getp')
   let posts = data.data
-    if(posts <= 0 ){
+    if(posts.length <= 0 ){
     req.flash('error', "No post found!")}
     if(req.user && posts.length>0) {
         for(let i=0 ; i<posts.length;i++){
@@ -22,7 +22,7 @@ router.get('/' ,async (req , res)=>{
                            posts[i].meta.like_flag = true }}}}
     else{
             for(let i=0 ; i<posts.length;i++){
-    posts[i].date = date_compare(new Date(posts[i].date) , new Date())}}
+    posts[i].date = date_compare(posts[i].date)}}
 res.render('home' , {posts , title:"Home" })
 })
 router.get('/check' ,(req , res)=>{

@@ -4439,6 +4439,14 @@ input[type="button"].btn-block {
 
 .card-img-top {
   width: 100%;
+  box-shadow: 0 0 13px 0px black;
+  transition: all 1s;
+  overflow: hidden;
+}
+.card-img-top:hover{
+  transition: all 1s;
+  transform: scale(1.01);
+
 }
 
 .card-img-bottom {

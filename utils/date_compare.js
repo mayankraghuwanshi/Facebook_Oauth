@@ -1,4 +1,5 @@
-function date_compare(date1 , date2){
+function date_compare(date1 , date2 = new Date()){
+    date1 = new Date(date1)
     if((date2.getFullYear() - date1.getFullYear()) === 0){
         if((date2.getMonth() - date1.getMonth()) ===0){
             if((date2.getDate() - date1.getDate()) ===0){

@@ -1,6 +1,7 @@
 const router  = require('express').Router()
 const Post    = require('../models/post')
-
+const date_compare = require('../utils/date_compare')
+const datef = require('../utils/date')
 function Logcheck(req , res ,next) {
     if(!req.isAuthenticated()){
         req.flash('error' , 'please login first')
@@ -36,11 +37,19 @@ router.post('/add' ,Logcheck, (req , res)=>{
     })
 })
 
-router.get('/find:id' , (req , res)=>{
-    Post.findOne({_id:req.params.id}).populate('user').then((post)=>{
+router.get('/find:id' , async (req , res)=>{
+     Post.findOne({_id:req.params.id}).populate('user').then((post)=>{
+        if(req.user){
+                  if(`${post.user._id}` ===`${req.user._id}`){
+                      post.meta.delete_flag = true}
+                 post.likes.forEach((like)=>{
+                  if(`${like.liker_id}` === `${req.user._id}`){
+                          post.meta.like_flag = true;}})}
+                         // res.send(post)
         res.render('post' , {post})
     }).catch((err)=>{
-        res.send(err)
+        req.flash("error" , "Something went wrong while fetching post :(")
+        res.redirect('/')
     })
 
 })

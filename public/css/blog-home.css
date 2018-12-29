@@ -17,6 +17,9 @@ body {
 .fixed-top{
   box-shadow: 0 0 3px 0px black;
 }
+.container{
+  padding: 0;
+}
 .alert {
   position: absolute;
   text-align: center;

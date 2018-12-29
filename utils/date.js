@@ -1,6 +1,5 @@
 module.exports =
-    function date() {
-        let date = new Date()
+    function date(date = new Date()) {
         let day , month , hours,year , time;
         day = date.getDate()
         month = date.getMonth()+1

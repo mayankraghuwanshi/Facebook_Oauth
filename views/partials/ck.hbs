@@ -1,5 +1,5 @@
 {{# if user}}
-    <script src="https://cdn.ckeditor.com/4.11.0/standard/ckeditor.js"></script>
+    <script src="//cdn.ckeditor.com/4.11.1/standard/ckeditor.js"></script>
     <div class="card my-4">
         <h5 class="card-header" align="center">{{user.firstname}} how's you feeling today</h5>
         <div class="card-body">
@@ -21,6 +21,7 @@
         </div>
     </div>
     <script>
+        CKEDITOR.config.height = 300
         CKEDITOR.replace( 'content' );
 
     </script>

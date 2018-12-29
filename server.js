@@ -43,6 +43,16 @@ function Logcheck(req , res ,next) {
         next()}
 }
 
+
+
+
+
+
+
+
+
+
+
 server.get('/home' , Logcheck , (req , res)=>{
     res.render('home')
 })
@@ -52,6 +62,6 @@ server.use('/' , require('./routes/main'))
 server.get('/privacy' , (req , res)=>{
     res.render('privacy')
 })
-server.listen(process.env.PORT || 3000, ()=>{
+server.listen(3000 || process.env.PORT , ()=>{
     console.log("http://localhost:3000/auth/facebook\nhttp://localhost:3000")
 })

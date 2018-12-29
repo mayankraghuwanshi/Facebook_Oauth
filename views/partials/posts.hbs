@@ -12,20 +12,22 @@
                     <a href="/post/find{{this._id}}" class="btn btn-primary">Read More &rarr;</a>
                 </div>
                 <div class="card-footer text-muted">
-                    Posted {{this.date}}, 2017 by
+                    {{this.date}} ago by
                     <a href="/user/find{{this.user._id}}">{{this.user.firstname}}</a>
-                    {{# if this.flag}}
-                        <div style="
-                        width: 100px; float: right; margin: 5px; padding: 5px; border-radius: 5px;
-                        background-color: #d9dfe5;
-                                                                      ">
+   <div style="padding: 5px; background-color: #c7cfd6; width: 150px; height: 30px; border-radius: 12px; float: right">
+                        Upvotes {{this.meta.likes_count}}
+                    {{# if this.meta.like_flag}}
                         <a href="/post/like{{this._id}}">
-                            <img src="https://static.thenounproject.com/png/901800-200.png"
-                                 style="width: 20px; margin: 2px 5px 0 0; float: left"></a>
-                            {{this.likes_count}}
+                            <img src="/assets/downvote.png"
+                                 style="width: 20px;  float: right"></a>
+                        {{else}}
+                        <a href="/post/like{{this._id}}">
+                            <img src="/assets/upvote .png"
+                                 style="width: 20px;  float: right;" ></a>{{/if}}
+                    {{# if this.meta.delete_flag}}
                               <a id="delete" href="/post/delete{{this._id}}">
                         <img id="delete" src="https://img.icons8.com/metro/1600/delete.png"
-                             style="width: 20px; float: right"></a></div>{{/if}}
+                             style="width: 20px; float: right"></a>{{/if}}</div>
                 </div>
             </div>
         {{/each}}

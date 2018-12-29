@@ -1,5 +1,5 @@
 const router  = require('express').Router()
-const Post = require('../models/post')
+const Post    = require('../models/post')
 
 router.get('/getp' , (req , res)=>{
     Post.find({}).populate('user').then((data)=>{
@@ -41,6 +41,7 @@ router.post('/add_c:id' , async (req , res)=>{
     else{
     const data = await Post.findOne({_id : req.params.id})
     data.comments.push({ comment: req.body.comment , commenter : req.user.firstname , commenter_id : req.user._id})
+        data.meta.comments_count +1;
     data.save().then((data)=>{
         req.flash('success' , "comment has added.")
         res.redirect(`/post/find${req.params.id}`)
@@ -72,7 +73,7 @@ router.get('/delete:id' , (req , res)=>{
 router.get('/like:id' , async (req , res)=>{
    let post = await Post.findOne({_id : req.params.id});
    if(!post) {
-       req.flash('error', "not able to fetch post ")
+       req.flash('error', "Not able to fetch post ")
        res.redirect(`/post/find${req.params.id}`)
    }else{
        let flag = false;
@@ -83,33 +84,25 @@ router.get('/like:id' , async (req , res)=>{
       if(flag){
           //dislike
           post.likes.pop({liker_id : req.user._id , liker_name : req.user.firstname})
-          post.likes_count = post.likes_count-1;
+          post.meta.likes_count = post.meta.likes_count-1;
           post.save().then((data)=>{
               req.flash('success' , "Disliked.")
               res.redirect('/')
           }).catch((err)=>{
               req.flash('error' , 'something went wrong while Disliking!')
               res.redirect('/')
-          })
-      }
+          })}
       else{
           //like
           post.likes.push({liker_id : req.user._id , liker_name : req.user.firstname})
-          post.likes_count = post.likes_count+1;
+          post.meta.likes_count = post.meta.likes_count+1;
           post.save().then((data)=>{
               req.flash('success' , "Liked.")
               res.redirect('/')
           }).catch((err)=>{
                   req.flash('error' , 'something went wrong while liking!')
                   res.redirect('/')
-          })
-      }
-
-
-   }
-
-
-})
+          })}}})
 
 router.get('/getpost' , (req , res)=>{
     Post.find({}).populate('user').then((data)=>{
@@ -118,8 +111,6 @@ router.get('/getpost' , (req , res)=>{
         res.send((err))
     })
 })
-
-
 
 
 module.exports = router
